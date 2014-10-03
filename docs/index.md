@@ -15,4 +15,4 @@ Storm is more than just a hardware platform, it's also a set of tools that makes
 
 ### Getting help
 
-You can get live help with Storm and the tools in the IRC channel #calstorm on irc.freenode.net.
+You can get live help with Storm and the tools in the IRC channel [#calstorm](http://webchat.freenode.net/?channels=#calstorm&prompt=0) on irc.freenode.net.
