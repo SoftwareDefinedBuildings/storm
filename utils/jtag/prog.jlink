@@ -1,4 +1,4 @@
-exec device = ATSAM4LC8C
+;exec device = ATSAM4LC8C
 speed 1200
 r
 r
