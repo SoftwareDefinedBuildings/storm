@@ -13,3 +13,6 @@ For form factor information and pin mappings, read the [module overview]({% post
 
 Storm is more than just a hardware platform, it's also a set of tools that makes Internet of Things development easier. Chief among this is the [Storm bootloader]({% post_url 2014-10-02-sloader %}). For information on the program memory layout and linker file, start there.
 
+### Getting help
+
+You can get live help with Storm and the tools in the IRC channel #calstorm on irc.freenode.net.
