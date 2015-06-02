@@ -15,7 +15,7 @@ date: 2015-06-02 21:38:16
 
 ### <a name="hardware"> Hardware Setup
 
-The FireStorm Border Router (FSBR) uses the [W5200 Ethernet Shield](http://www.seeedstudio.com/wiki/images/e/e7/W5200_Datasheet.pdf) [discontinuation note][].
+The FireStorm Border Router (FSBR) uses the [W5200 Ethernet Shield](http://www.seeedstudio.com/wiki/images/e/e7/W5200_Datasheet.pdf).
 There are 4 wires that must be attached to the shield for it to function with the FireStorm (this is
 because the shield does not actually connect SPI to the GPIO pins, and the interrupt is not
 connected.
@@ -24,7 +24,7 @@ Wiring diagram coming soon.
 
 The ethernet shield should be connected to the FireStorm like a normal shield.
 
-[discontinuation note]: The [W5200 has been discontinued](http://www.seeedstudio.com/depot/W5200-Ethernet-Shield-p-1577.html), and Seeed recommends
+**Discontinuation note**: The [W5200 has been discontinued](http://www.seeedstudio.com/depot/W5200-Ethernet-Shield-p-1577.html), and Seeed recommends
 that all users move to the [W5500](http://www.seeedstudio.com/depot/W5500-Ethernet-Shield-p-2433.html), but the code hasn't caught up yet.
 
 ### <a name="software"> Software Setup
@@ -32,6 +32,8 @@ that all users move to the [W5500](http://www.seeedstudio.com/depot/W5500-Ethern
 To configure the kernel to support the ethernet shield, we need to edit several files in the Kernel
 application as well as the `build.lua` file. All paths mentioned are relative to the base
 `firestorm_environment` or `workspace` directory mentioned in other tutorials.
+
+#### `build.lua`
 
 In `build.lua`, change the `kernel_opts` table to enable the ethernet shield. Disabling quiet mode
 is optional, but can be helpful for debugging the setup of the ethernet shield.
@@ -49,7 +51,7 @@ to the ethernet shield.
 The ethernet shield does not contain the Lua runtime, so whatever libs and autorun you specify in
 the `build.lua` file will be ignored.
 
-[Done with build.lua]
+#### `Makefile`
 
 In `toolchains/stormport/apps/Kernel/Makefile`, replace the IPv6 address associated with
 `IN6_PREFIX` to be your /48 prefix (see the [network configuration section](#netweork)). For example, if your IPv6 prefix was `2001:470:1234::/48`, then
@@ -78,7 +80,7 @@ PFLAGS += -DRPL_SINGLE_HOP=\"fe80::212:6d02:0:XXXX\"
 
 Where `XXXX` is the 4-byte id of the border router node.
 
-[Done with Makefile]
+#### `EthernetP`
 
 In `toolchains/stormport/apps/Kernel/EthernetP.nc`, we need to statically assign an IPv4 address to
 the border router for the IPv6 tunnel. Look for the following code inside `event void
