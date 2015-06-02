@@ -5,6 +5,6 @@ category: ref
 date: 2015-06-01 14:11:00
 ---
 
-The Firestorm
+The Firestorm 2
 
-{% image med firestorm_iso.jpg %}
+{% image 300xAUTO firestorm_iso.jpg %}

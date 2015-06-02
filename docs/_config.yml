@@ -41,8 +41,8 @@ image:
   output: generated
   presets:
     med:
-      width: 400
-      height: 400
+      width: 200
+      height: 200
 
 # Use the redcarpet Markdown renderer
 markdown: redcarpet
