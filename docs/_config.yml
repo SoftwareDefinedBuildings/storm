@@ -36,6 +36,14 @@ future: true
 # Exclude non-site files
 exclude: ['bin', 'README.md']
 
+image:
+  source: assets/
+  output: generated
+  presets:
+    med:
+      width: 200
+      height: 200
+
 # Use the redcarpet Markdown renderer
 markdown: redcarpet
 redcarpet:
