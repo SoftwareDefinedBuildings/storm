@@ -101,8 +101,6 @@ destip = makeIPV4(10, 4, 10, 142);
 }
 ```
 
-[Done with EthernetP.nc]
-
 ### <a name="network"> Network Configuration
 
 This assumes you have a public IPv6 address and an allocated /48 subnet. [Hurricane
