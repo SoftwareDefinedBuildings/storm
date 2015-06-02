@@ -13,7 +13,7 @@ date: 2015-06-02 21:38:16
 * [Troubleshooting](#troubleshooting)
 
 
-### <a name="hardware"> Hardware Setup
+### <a name="hardware"></a> Hardware Setup
 
 The FireStorm Border Router (FSBR) uses the [W5200 Ethernet Shield](http://www.seeedstudio.com/wiki/images/e/e7/W5200_Datasheet.pdf).
 There are 4 wires that must be attached to the shield for it to function with the FireStorm (this is
@@ -27,7 +27,7 @@ The ethernet shield should be connected to the FireStorm like a normal shield.
 **Discontinuation note**: The [W5200 has been discontinued](http://www.seeedstudio.com/depot/W5200-Ethernet-Shield-p-1577.html), and Seeed recommends
 that all users move to the [W5500](http://www.seeedstudio.com/depot/W5500-Ethernet-Shield-p-2433.html), but the code hasn't caught up yet.
 
-### <a name="software"> Software Setup
+### <a name="software"></a> Software Setup
 
 To configure the kernel to support the ethernet shield, we need to edit several files in the Kernel
 application as well as the `build.lua` file. All paths mentioned are relative to the base
@@ -101,7 +101,7 @@ destip = makeIPV4(10, 4, 10, 142);
 }
 ```
 
-### <a name="network"> Network Configuration
+### <a name="network"></a> Network Configuration
 
 This assumes you have a public IPv6 address and an allocated /48 subnet. [Hurricane
 Electric](https://tunnelbroker.net/) is a great service for this.
@@ -127,4 +127,4 @@ ip route add $SERVER_SUBNET_TUN dev tunnel
 ip route add $FSBR_SUBNET_TUN dev tunnel
 ```
 
-### <a name="troubleshooting"> Troubleshooting
+### <a name="troubleshooting"></a> Troubleshooting
