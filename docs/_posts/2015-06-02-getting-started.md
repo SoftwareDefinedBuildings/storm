@@ -142,6 +142,8 @@ hello world
 hello world
 ```
 
+Press Ctl-C to exit.
+
 ### <a name="talkingtoit"></a> Talking to a Networked "Thing"
 
 The `build.lua` file is fairly well self-documented, but there a few options worth pointing out:
@@ -185,4 +187,65 @@ dofile("toolchains/storm_elua/build_support.lua")
 go_build()
 ```
 
-Now, run `build.lua` and you should be dropped into an interactive Lua shell.
+Now, run `build.lua` and you should be dropped into an interactive Lua shell. 
+
+```
+[SLOADER] Attached
+SERIAL NUMBER 0x3007
+IPAddress - Setting global address: 2001:470:1234:2:212:6d02::3007
+Booting kernel 4.0.3.0 (25b11aab07a0865122330531fe728be541fd499a)
+stormsh> 
+```
+
+Lua is a very simple language, but provides nice mechanisms for concurrency and can also be embedded
+in C or have C embedded within it. The Lua shell is a great interactive debug and test environment,
+but is also a rapid prototyping vehicle.
+
+There are a few Lua programming resources we recommend:
+
+* http://thomaslauer.com/download/luarefv51.pdf
+* http://learnxinyminutes.com/docs/lua/
+* http://luatut.com/crash_course.html
+
+A few things to keep in mind:
+
+* Variables need not be defined; use of an undefined variable simply returns nil.  Assignment
+  defines it.  Lua throws very few errors.  (In the embedded world most things are unattended so no
+  one will notice if you scream, so you need to check and handle the exceptions, rather than throw
+  them to the “user”
+* Variables have global scope unless explicitly declared local! Our advice - declaring everything as
+  local unless you really wanted it accessible everywhere.  Especially in concurrent code this WILL
+  bite you. And these kind of bugs are hard to find.
+  Conditionals treat nil as false, but not 0.
+* `function foo() ...` is just syntactic sugar for `foo = function() ...`
+* Statements and clauses are explicitly closed.  Line breaks and such don’t matter.
+* The central data structure primitive is the table - a sequence of <key,val> like a dictionary.  It
+  is used for lists, arrays, modules, objects and just about everything else.
+  For example:
+
+  ```lua
+  x = {1,2,['apple']='red',['foo']=function() print('foo') end}
+  print(x) -- what does this return?
+  for k,v in pairs(x) do print(k,v) end -- iterate over all key/value pairs
+  x[2] -- treat x like an array
+  x.red -- or like a struct (also x["red"])
+  x.foo() -- or like an object with a foo() method
+  ```
+* Ctl-D or Ctl-C should exit you from the terminal. Use `sload tail -i` to reattach. Note that no
+  data you type into the shell is persisted on the node , so disconnecting and reattaching will
+  delete any variables you had previously declared.
+
+
+The kernel defines a set of syscalls (documentation is [here](https://github.com/SoftwareDefinedBuildings/storm_elua/wiki))
+that we will cover in-depth later. Read the documentation on the `storm.io` module, which we can use
+to turn an LED on and off (LED itself is located on the far end of the FireStorm from the USB
+cable). To do this, we configure the GP0 pin on the storm as an output, and then write 1 to it.
+
+From the shell:
+
+```lua
+stormsh> storm.io.set_mode(storm.io.OUTPUT, storm.io.GP0)
+stormsh> storm.io.set(1, storm.io.GP0) -- can also use storm.io.HIGH/LOW instead of 1/0
+```
+
+Now, try turning the LED off.
