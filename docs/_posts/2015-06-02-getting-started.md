@@ -53,7 +53,7 @@ make it availble to the virtual machine. Whenever a FireStorm is plugged in, you
 virtual machine by selecting it from the drop down list of USB devices. The FireStorm will likely be the only FTDI device
 in your USB list, so it should be easy to identify.
 
-[{% image 400xAUTO virtualbox_usbdevice.png %}]( {{ site.url }}/assets/virtualbox_usbdevice.png )
+[{% image 400xAUTO virtualbox_usbdevice.jpg %}]( {{ site.url }}/assets/virtualbox_usbdevice.jpg )
 
 This needs to be done every time a FireStorm is plugged in, even if you had previously enabled the passthrough and then disconnected.
 
