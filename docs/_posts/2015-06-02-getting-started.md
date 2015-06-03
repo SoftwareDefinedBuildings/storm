@@ -8,7 +8,8 @@ date: 2015-06-02 02:20:46
 ### Table of Contents
 
 * [Setting up Your Environment](#environment)
-* [Talking to a Networked "Thing": Hello World](#helloworld)
+* [Hello World](#helloworld)
+* [Talking to a Networked "Thing"](#talkingtoit)
 
 
 
@@ -77,7 +78,7 @@ unusual behaviour.
 
 **TODO: does the VM come with `https://github.com/SoftwareDefinedBuildings/ioet_contrib` pre-cloned?**
 
-### <a name="helloworld"></a> Talking to a Networked "Thing": Hello World
+### <a name="helloworld"></a> Hello World
 
 The FireStorm attaches via USB Micro to your computer. Plug in your FireStorm (remember to enable
 the passthrough if you are on the VM) and type the following into the terminal to check if your
@@ -107,15 +108,15 @@ Verify that it contains the following contents:
 #!/usr/bin/env lua
 
 -- Keep the comments in your version of the build file. We omit them here for brevity
-autorun = "contrib/app/helloworld.lua" --<< EDIT ME
-libs = { --<< EDIT ME
+autorun = "contrib/app/helloworld.lua"
+libs = {
     cord    = "contrib/lib/cord.lua",
 }
 autoupdate = true
 reflash_kernel = true
 kernel_opts = {
-    quiet = true, -- if set to false, you will see kernel debug messages
-    eth_shield = false -- set to true to enable the ethernet shield 
+    quiet = true,
+    eth_shield = false
 }
 dofile("toolchains/storm_elua/build_support.lua")
 go_build()
@@ -140,3 +141,48 @@ Booting kernel 4.0.3.0 (25b11aab07a0865122330531fe728be541fd499a)
 hello world
 hello world
 ```
+
+### <a name="talkingtoit"></a> Talking to a Networked "Thing"
+
+The `build.lua` file is fairly well self-documented, but there a few options worth pointing out:
+
+* `autorun = "relative/path/to/file.lua"`: 
+    This specifies the main file that is run when the FireStorm boots. Often this file will not end,
+    as it enters the cord scheduling loop. If you omit this parameter, the mote will boot into a
+    primitive Lua shell (without coroutines).
+* `libs = {libname="relative/path/to/library.lua", libname2=...}`:
+    This table specifies the files that will be programmed into ROM on the device. You can `require`
+    these libraries later to use them
+* `reflash_kernel = true|false`:
+    This specifies whether or not the kernel should be updated when `build.lua` is run. Enabling
+    this slows down the build a little, so it is recommended to set this to true every now and then
+    so that the kernel stays up to date.
+* `quiet = true|false`:
+    This should be `true` by default, but disabling quiet-mode will give you all of the kernel
+    messages that can be helpful for more complex debugging tasks.
+
+Now, let's edit the `build.lua` file so that we can get an interactive prompt that supports
+coroutines. First, change the build file so that the application that runs when the FireStorm boots
+is `shell.lua`, in the `contrib/app` directory. Next, add the `stormsh.lua` library from
+`contrib/lib` lua`. 
+
+Your build file should now look like the following (excluding comments):
+
+```lua
+#!/usr/bin/env lua
+autorun = "contrib/app/shell.lua" -- we added this line
+libs = {
+    cord    = "contrib/lib/cord.lua",
+    stormsh = "contrib/lib/stormsh.lua", -- we added this line
+}
+autoupdate = true
+reflash_kernel = true
+kernel_opts = {
+    quiet = true,
+    eth_shield = false
+}
+dofile("toolchains/storm_elua/build_support.lua")
+go_build()
+```
+
+Now, run `build.lua` and you should be dropped into an interactive Lua shell.
