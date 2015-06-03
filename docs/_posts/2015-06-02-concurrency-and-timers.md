@@ -7,11 +7,10 @@ date: 2015-06-02 02:20:46
 
 ### Table of Contents
 
-* Introduction to Timers
-* Concurrency in the Shell
-* `Cord`
+* [Introduction to Timers](#introtimers)
+* [Introduction to `Cord`](#introcord)
 
-### <a name="timers"></a> Introduction to Timers
+### <a name="introtimers"></a> Introduction to Timers
 
 Many aspects of embedded systems have to do with time -- sensors are sampled at some rate (or o nsome period), actions are
 taken, activities are scheduled. The [`storm.os`](https://github.com/SoftwareDefinedBuildings/storm_elua/wiki#stormos) 
@@ -64,3 +63,5 @@ function blink(pin)
     end)
 end
 ```
+
+### <a name='introcord'></a> Introduction to `Cord`
